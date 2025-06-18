@@ -1,6 +1,7 @@
 cub3D/
 ├── Makefile
-├── cub3d.c                → Main entry point
+├── main.c                → Main entry point
+|-- cube3d.c              -> holds the core logic of exit_error() and  exit_game()
 ├── includes/
 │   └── cub3d.h            → Central header for all prototypes, macros, structs
 ├── src/
