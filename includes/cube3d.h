@@ -29,6 +29,7 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+#define  FLAG_SAVE 1
 
 typedef struct s_img 
 { 
@@ -84,6 +85,7 @@ int main(int argc, char **argv);
 
 void init_game(t_game *game);
 void init_textures(t_game *game);
+void ft_bzero(void *s, size_t n);
 
 int parse_cub_file(char *filename, t_game *game);
 int validate_map(t_game *game);
