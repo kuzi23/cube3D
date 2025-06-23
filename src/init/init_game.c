@@ -14,7 +14,7 @@ int init_game(t_game *game, int save_opt)
 
         //Set save flag
 	if(save_opt)
-		game->ptions |= FLAG_SAVE;
+		game->options |= FLAG_SAVE;
 
 	//If not in screenshot-only mode, create window
 	if (!(game->options & FLAG_SAVE))
@@ -41,7 +41,7 @@ int init_game(t_game *game, int save_opt)
 	//Initialize player position to -1 (indicating not set)
 	game->player.x = -1;
 	game->player.y = -1;
-	game->payer.dir = 0;
+	game->player.dir = 0;
 
 	return (1);
 }

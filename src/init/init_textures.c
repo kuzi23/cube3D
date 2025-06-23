@@ -1,5 +1,5 @@
 
-#include "cub3d.h"
+#include "cube3d.h"
 
 static int load_texture(t_game *game, t_img *tex, char *path)
 {

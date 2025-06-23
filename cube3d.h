@@ -13,7 +13,8 @@
 
 
 // mlx library
-#include "mlx.h"
+#include "minilibx-linux/mlx.h"
+#include "config.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -30,6 +31,9 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 #define  FLAG_SAVE 1
+
+#define MOVE_SPEED 0.1
+#define ROT_SPEED (5 * PI / 180)
 
 typedef struct s_img 
 { 
@@ -67,23 +71,32 @@ typedef struct s_ray
 	int  wall_type;
 }   t_ray;
 
+typedef struct s_window {
+    void *ptr;
+    void *win;
+} t_window;
+
 typedef struct s_game
 {
-	void *mlx;
-	void *win;
-	t_img    screen;
-	t_texture textures;
-	t_player player;
-	char **map;
-	int map_width;
-	int map_height;
-	int floor_color;
-	int ceiling_color;
-}  t_game;
+    void *mlx;
+    t_window window;
+    t_img screen;
+    t_texture textures;
+    t_player player;
+    t_ray *rays;
+    char **map;
+    int map_width;
+    int map_height;
+    int floor_color;
+    int ceiling_color;
+    t_config config;
+    int options;
+} t_game;
+
 
 int main(int argc, char **argv);
 
-void init_game(t_game *game);
+int init_game(t_game *game, int save_opt);
 void init_textures(t_game *game);
 void ft_bzero(void *s, size_t n);
 
@@ -96,6 +109,10 @@ void render_frame(t_game *game);
 void cast_rays(t_game *game);
 void draw_walls(t_game *game);
 void draw_minimap(t_game *game);
+t_ray cast_single_ray(t_game *game, double ray_angle);
+void draw_walls(t_game *game);
+void draw_texture_line(t_game *game, int x, int  wall_height, t_ray ray);
+void draw_minimap(t_game *game);
 
 int handle_input(int keycode, t_game *game);
 int close_game(t_game *game);
@@ -105,7 +122,7 @@ void get_pixel_color(t_img *img, int x, int y);
 
 double normalize_angle(double angle);
 double distance (double x1, double y1, double x2, double y2);
-void exit_error(const char *message, t_game *game);
+int exit_error(t_game *game, const char *message);
 void exit_game(t_game *game);
 
 char *skip_spaces(char *str);

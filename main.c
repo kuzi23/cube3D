@@ -1,11 +1,11 @@
 
-#include "cub3d.h"
+#include "cube3d.h"
 
 int exit_error(t_game *game, const char *str)
 {
 	if (str)
-		write(STDERR_FILENO, str, ft_strlen(str));
-	exit_game(game, EXIT_FAILURE);
+		write(STDERR_FILENO, str, strlen(str));
+	exit_game(game);
 	return (EXIT_FAILURE);
 }
 
@@ -15,7 +15,7 @@ int main(int argc,  char **argv)
 	int save_opt;
 
 	//handle -save option (optional screenshot)
-	save_opt = (argc >= 2 && !ft_strcmp(argv[1], "-save"));
+	save_opt = (argc >= 2 && !strcmp(argv[1], "-save"));
 	if (argc < (2 + save_opt))
 		return (exit_error(&game, "error:\nNo map specified.\n"));
 	//initialize the game
