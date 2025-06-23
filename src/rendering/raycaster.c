@@ -2,6 +2,8 @@
 
 t_ray cast_single_ray(t_game *game, double ray_angle)
 {
+    (void)game;
+    
     t_ray ray;
 
     ray.angle = normalize_angle(ray_angle);

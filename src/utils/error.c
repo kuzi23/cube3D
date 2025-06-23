@@ -8,11 +8,12 @@ void ft_bzero(void *s, size_t n)
 		*p++ = 0;
 }
 
-void exit_error(const char *message, t_game *game)
+int exit_error(t_game *game, const char *message)
 {
 	if (message)
 		fprintf(stderr, "Error: %s\n", message);
 	exit_game(game);
+	return (1);
 }
 
 void exit_game(t_game *game)
@@ -23,7 +24,7 @@ void exit_game(t_game *game)
 	if (game->screen.img_ptr)
 		mlx_destroy_image(game->mlx, game->screen.img_ptr);
 
-	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_window(game->mlx, game->window.win);
 
 	// Destroy texture images if they exist
 	if (game->textures.north.img_ptr)

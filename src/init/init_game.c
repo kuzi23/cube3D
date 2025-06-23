@@ -19,8 +19,8 @@ int init_game(t_game *game, int save_opt)
 	//If not in screenshot-only mode, create window
 	if (!(game->options & FLAG_SAVE))
 	{
-		game->win = mlx_new_window(game->mlx, HEIGHT, "cub3D");
-		if (!game->win)
+		game->window.win = mlx_new_window(game->mlx, WIDTH , HEIGHT, "cub3D");
+		if (!game->window.win)
 			return (0);
 	}
 
@@ -44,4 +44,32 @@ int init_game(t_game *game, int save_opt)
 	game->player.dir = 0;
 
 	return (1);
+}
+
+int finish_init(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		return (exit_error(game, "Failed to create window"));
+
+	game->window.ptr = game->mlx;
+	game->window.win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
+	if (!game->window.win)
+		return (exit_error( game, "Failed to create window"));
+
+	game->screen.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	if (!game->screen.img_ptr)
+		return (exit_error(game, "Failed to create window"));
+
+	game->screen.data = mlx_get_data_addr(game->screen.img_ptr,
+			&game->screen.bpp, &game->screen.size_line, &game->screen.endian);
+
+	game->screen.width = WIDTH;
+	game->screen.height = HEIGHT;
+
+	game->rays = malloc(sizeof(t_ray) * WIDTH);
+	if (!game->rays)
+		return (exit_error(game, "Failed to create window"));
+
+	return (1);  // Success
 }

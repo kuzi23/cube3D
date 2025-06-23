@@ -23,7 +23,7 @@ int main(int argc,  char **argv)
 		return (exit_error(&game, "Error:\nFailed to initialize game.\n"));
 
 	//parse the map and configuration from .cub file
-	if (!parse_config(&game.config, argv[1 + save_opt]))
+	if (!parse_cub_file(&game, argv[1 + save_opt]))
 		return (exit_error(&game, "error:\nInvalid or corrupt map file.\n"));
 
 	//finalize initialization (textures, raycasting setup, etc.)

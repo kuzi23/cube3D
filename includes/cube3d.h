@@ -13,7 +13,9 @@
 
 
 // mlx library
-#include "minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx.h"
+#include "../get_next_line/get_next_line.h"
+#include "../libft/libft.h"
 #include "config.h"
 
 #define WIDTH 800
@@ -22,6 +24,10 @@
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
 #define PI 3.14159265358979323846
+
+#define X_EVENT_KEY_PRESS 2
+#define X_EVENT_KEY_RELEASE 3
+#define X_EVENT_EXIT 17
 
 # define KEY_W 119
 # define KEY_A 97
@@ -55,11 +61,19 @@ typedef struct s_texture
 	t_img west;
 }	t_texture;
 
+
 typedef struct s_player
 {
 	double x;
 	double y;
-	double dir;
+	double dir;          // In radians
+
+	// Add these:
+	int walk_dir;        // -1 back, +1 forward
+	int strafe_dir;      // -1 left, +1 right
+	int turn_dir;        // -1 left, +1 right
+	double move_speed;   // e.g., 4.0
+	double rot_speed;    // e.g., 0.05
 }	t_player;
 
 typedef struct s_ray 
@@ -96,11 +110,20 @@ typedef struct s_game
 
 int main(int argc, char **argv);
 
+int key_release(int keycode, t_game *game);
+int key_press(int keycode, t_game *game);
+int	main_loop(t_game *game);
+int exit_hook(t_game *game);
+int screenshot(t_game *game);
+int finish_init(t_game *game);
+void	parse_map_line(t_game *game, char *line);
+
+
 int init_game(t_game *game, int save_opt);
-void init_textures(t_game *game);
+int init_textures(t_game *game);
 void ft_bzero(void *s, size_t n);
 
-int parse_cub_file(char *filename, t_game *game);
+int parse_cub_file(t_game *game, char *filename);
 int validate_map(t_game *game);
 void parse_colors(char *line, int *color);
 void parse_texture_path(char *line, t_texture *textures, char dir);

@@ -1,5 +1,4 @@
 #include "cube3d.h"
-#include "cub3d.h"
 
 void free_map(char **map)
 {
@@ -37,8 +36,8 @@ void exit_game(t_game *game)
     free_map(game->map);
 
     // Destroy window and display
-    if (game->win)
-        mlx_destroy_window(game->mlx, game->win);
+    if (game->window.win)
+        mlx_destroy_window(game->mlx, game->window.win);
     if (game->mlx)
     {
         mlx_destroy_display(game->mlx);
@@ -52,4 +51,17 @@ int close_game(t_game *game)
 {
     exit_game(game);
     return (0);
+}
+
+int exit_hook(t_game *game)
+{
+	// Free resources here if needed
+	// Example:
+	if (game->window.win)
+		mlx_destroy_window(game->mlx, game->window.win);
+	if (game->screen.img_ptr)
+		mlx_destroy_image(game->mlx, game->screen.img_ptr);
+
+	exit(0);
+	return (0);
 }

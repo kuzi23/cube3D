@@ -28,3 +28,9 @@ cub3D/
 │   └── textures/           → Wall textures (north.xpm, south.xpm, etc.)
 └── maps/
     └── sample.cub         → Example map file
+
+
+
+
+    mlx_destroy_display niya minilibx_linux
+    

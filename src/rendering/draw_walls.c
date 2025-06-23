@@ -2,6 +2,8 @@
 
 void draw_textured_line(t_game *game, int x, int wall_height, t_ray ray)
 {
+    (void)ray;
+
     int y_start = (HEIGHT - wall_height) / 2;
     int y_end = y_start + wall_height;
     int y;
